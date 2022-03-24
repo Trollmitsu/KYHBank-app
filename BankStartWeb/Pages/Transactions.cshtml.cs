@@ -25,14 +25,25 @@ namespace BankStartWeb.Pages
             public DateTime Date { get; set; }
             public decimal Amount { get; set; }
             public decimal NewBalance { get; set; }
+           
 
         }
         public Account Account { get; set; }
 
-        public List<TransactionsViewModel> transactions = new List<TransactionsViewModel>();
-        public void OnGet(int TransactionId)
+        public List<TransactionsViewModel> transaction { get; set; }
+        public void OnGet(int AccountId)
         {
-            Account = _context.Accounts.Include(t => transactions).First(a => a.Id == TransactionId); 
+            Account = _context.Accounts
+                .Include(a => a.Transactions)
+                .First(a => a.Id == AccountId);
+            transaction = Account.Transactions.Select(a => new TransactionsViewModel
+            {
+                Id = a.Id,
+                Type = a.Type,
+                Operation = a.Operation,
+                Date = a.Date,
+                Amount = a.Amount
+            }).ToList();
               
         }
     }

@@ -14,10 +14,10 @@
     @foreach(var Transaction in Model.Account.Transactions)
     {
          <tr>
-        <th>@Model.Account.Balance</th>
-        <th>Type</th>
-        <th>Date</th>
-        <th>New Balance</th>
+        <td>@Transaction.Amount</td>
+        <td>@Transaction.Type</td>
+        <td>@Transaction.Date</td>
+        <td>@Transaction.NewBalance</td>
     </tr>
     }
 
