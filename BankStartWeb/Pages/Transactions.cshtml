@@ -1,0 +1,24 @@
+﻿@page
+@model BankStartWeb.Pages.TransactionsModel
+@{
+}
+
+<table class="table" style="width:100%">
+    <tr>
+        
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>New Balance</th>
+    </tr>
+    @foreach(var Transaction in Model.Account.Transactions)
+    {
+         <tr>
+        <th>@Model.Account.Balance</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>New Balance</th>
+    </tr>
+    }
+
+</table>
