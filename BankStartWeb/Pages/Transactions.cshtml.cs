@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
+using static BankStartWeb.Pages.CustomersModel;
 
 namespace BankStartWeb.Pages
 {
@@ -30,6 +31,7 @@ namespace BankStartWeb.Pages
         }
         public Account Account { get; set; }
 
+        public List<CustomersViewModel> Customers = new List<CustomersViewModel>();
         public List<TransactionsViewModel> transaction { get; set; }
         public void OnGet(int AccountId)
         {
@@ -44,7 +46,9 @@ namespace BankStartWeb.Pages
                 Date = a.Date,
                 Amount = a.Amount
             }).ToList();
-              
         }
+
+        
+
     }
 }

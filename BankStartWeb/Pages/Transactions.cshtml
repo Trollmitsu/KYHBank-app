@@ -9,7 +9,9 @@
         <th>Amount</th>
         <th>Type</th>
         <th>Date</th>
+         <th>Operation</th>
         <th>New Balance</th>
+        <th><a asp-page="/Customer" asp-route-CustomerId="@Model.Account.Id">Go back</a></th>
     </tr>
     @foreach(var Transaction in Model.Account.Transactions)
     {
@@ -17,8 +19,11 @@
         <td>@Transaction.Amount</td>
         <td>@Transaction.Type</td>
         <td>@Transaction.Date</td>
+        <td>@Transaction.Operation</td>
         <td>@Transaction.NewBalance</td>
+        
     </tr>
     }
 
 </table>
+

@@ -45,7 +45,6 @@ namespace BankStartWeb.Pages
             Telephone = customer.Telephone;
             EmailAddress = customer.EmailAddress;
             Birthday = customer.Birthday;
-
             Accounts = customer.Accounts;
             
         }

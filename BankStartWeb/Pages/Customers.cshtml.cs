@@ -1,6 +1,7 @@
 using BankStartWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages
 {
@@ -26,7 +27,7 @@ namespace BankStartWeb.Pages
 
         }
         public List<CustomersViewModel> Customers = new List<CustomersViewModel>();
-        
+
         public void OnGet()
         {
             Customers = _context.Customers.Select(x => new CustomersViewModel
@@ -37,7 +38,7 @@ namespace BankStartWeb.Pages
                 Birthday = x.Birthday,
                 Country = x.Country,
                 EmailAddress = x.EmailAddress
-        }).ToList();
+        }).ToList();  
         }
     }
 }
