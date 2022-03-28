@@ -3,13 +3,15 @@
 @{
 }
 
-<h2>@Model.Givenname @Model.Surname</h2>
+<h2>@Model.Customer.Givenname @Model.Customer.Surname</h2>
 
 
-    <p>@Model.Country</p>
-    <p>@Model.CountryCode @Model.Telephone</p>
-    <p>@Model.Birthday</p>
-    <p>@Model.EmailAddress</p>
+    <p>@Model.Customer.Country</p>
+    <p>@Model.Customer.CountryCode @Model.Customer.Telephone</p>
+    <p>@Model.Customer.Birthday</p>
+    <p>@Model.Customer.EmailAddress</p>
+    <p>@Model.Customer.Streetaddress</p>
+    <p>@Model.Customer.Zipcode, @Model.Customer.City</p>
 
 
     <table class="table" style="width:100%">
@@ -26,7 +28,7 @@
             <td>@account.AccountType</td>
             <td>@account.Balance</td>
             
-            <th><a asp-page="/transactions" asp-route-AccountId="@account.Id"> See More </a></th>
+            <th><a asp-page="/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id"> See More </a></th>
         </tr>
     }
 

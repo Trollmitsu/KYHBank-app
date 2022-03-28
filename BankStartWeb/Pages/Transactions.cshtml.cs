@@ -30,10 +30,11 @@ namespace BankStartWeb.Pages
 
         }
         public Account Account { get; set; }
+        public Customer Customer { get; set; }
 
-        public List<CustomersViewModel> Customers = new List<CustomersViewModel>();
+        public int CustomerId { get; set; }
         public List<TransactionsViewModel> transaction { get; set; }
-        public void OnGet(int AccountId)
+        public void OnGet(int AccountId, int customerId)
         {
             Account = _context.Accounts
                 .Include(a => a.Transactions)
@@ -46,9 +47,13 @@ namespace BankStartWeb.Pages
                 Date = a.Date,
                 Amount = a.Amount
             }).ToList();
+
+            CustomerId = customerId;
         }
-
-        
-
+        public IActionResult OnPostCustomerId(int customerId)
+        {
+            Customer = _context.Customers.Include( s=>s.Accounts ).First( a => a.Id == customerId);
+            return RedirectToPage("/Customer", new {customerId});
+        }
     }
 }
