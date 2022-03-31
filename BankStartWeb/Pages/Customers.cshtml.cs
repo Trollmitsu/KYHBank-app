@@ -41,15 +41,15 @@ namespace BankStartWeb.Pages
         }).ToList();  
         }
 
-        public IActionResult OnPostByName()
-        {
-            var Customer = _context.Customers
-                .Include(s => s.Surname)
-                .Include(s => s.Birthday)
-                .Include(s => s.Country)
-                .Include(s => s.EmailAddress)
-                .OrderBy(b => b.Givenname).ToList();
-            return Page();
-        }
+        //public IActionResult OnPostByName()
+        //{
+        //    var Customer = _context.Customers
+        //        .Include(s => s.Surname)
+        //        .Include(s => s.Birthday)
+        //        .Include(s => s.Country)
+        //        .Include(s => s.EmailAddress)
+        //        .OrderBy(b => b.Givenname).ToList();
+        //    return Page();
+        //}
     }
 }

@@ -21,8 +21,13 @@
             <th>Money</th>
             <th>Transactions</th>
         </tr>
+        @{
+            decimal sum = 0;
+        }
+
     @foreach(var account in Model.Accounts)
     {
+        sum += account.Balance;
         <tr>
             <td>@account.Id</td>
             <td>@account.AccountType</td>
@@ -30,6 +35,10 @@
             
             <th><a asp-page="/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id"> See More </a></th>
         </tr>
+        
     }
+   
 
     </table>
+    <h3>Total Balance</h3>
+     @sum.ToString("C")
