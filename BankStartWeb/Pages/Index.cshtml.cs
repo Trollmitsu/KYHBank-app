@@ -16,14 +16,10 @@ namespace BankStartWeb.Pages
             _context = context;
         }
 
-       
 
-            public List<Account> Accounts { get; set; } = new List<Account>();
+        public List<Customer> Customers { get; set; }
+        public List<Account> Accounts { get; set; }
 
-           
-
-          
-       
 
         public void OnGet()
         {
