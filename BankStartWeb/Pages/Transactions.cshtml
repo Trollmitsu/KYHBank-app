@@ -2,7 +2,10 @@
 @model BankStartWeb.Pages.TransactionsModel
 @{
 }
+<h3>Total Balance</h3>
+    @Model.Account.Balance kr
 
+    <p><a asp-page="/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
 <table class="table" style="width:100%">
     <tr>
         
@@ -11,9 +14,9 @@
         <th>Date</th>
         <th>Operation</th>
         <th>New Balance</th>
-        <th><a asp-page="/Customer" asp-route-customerId="@Model.CustomerId">Go back</a></th>
     </tr>
-    @foreach(var Transaction in Model.Account.Transactions)
+    
+    @foreach(var Transaction in Model.transaction)
     {
      <tr>
         <td>@Transaction.Amount</td>
@@ -21,9 +24,7 @@
         <td>@Transaction.Date</td>
         <td>@Transaction.Operation</td>
         <td>@Transaction.NewBalance</td>
-        
     </tr>
     }
-
 </table>
 

@@ -7,12 +7,13 @@
 
 
     <p>@Model.Customer.Country</p>
-    <p>@Model.Customer.CountryCode @Model.Customer.Telephone</p>
+    <p>@Model.Customer.CountryCode </p>
+    <p>@Model.Customer.TelephoneCountryCode  @Model.Customer.Telephone</p>
     <p>@Model.Customer.Birthday</p>
     <p>@Model.Customer.EmailAddress</p>
     <p>@Model.Customer.Streetaddress</p>
     <p>@Model.Customer.Zipcode, @Model.Customer.City</p>
-    <a asp-page="/Customers">go back</a>
+    
 
     <table class="table" style="width:100%">
         <tr>
@@ -42,3 +43,5 @@
     </table>
     <h3>Total Balance</h3>
      @sum.ToString("C")
+
+     <p><a asp-page="/Customers">Back To Customers List</a></p>

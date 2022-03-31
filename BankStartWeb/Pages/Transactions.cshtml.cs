@@ -45,8 +45,9 @@ namespace BankStartWeb.Pages
                 Type = a.Type,
                 Operation = a.Operation,
                 Date = a.Date,
+                NewBalance = a.NewBalance,
                 Amount = a.Amount
-            }).ToList().OrderByDescending(e => e.Date).ToList();
+            }).OrderByDescending(e=>e.Date).ToList();
 
             CustomerId = customerId;
         }

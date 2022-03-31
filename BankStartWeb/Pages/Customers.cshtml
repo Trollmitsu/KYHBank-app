@@ -2,23 +2,63 @@
 @model BankStartWeb.Pages.CustomersModel
 @{
 }
-
+<form method="get">
+    <input asp-for="@Model.SearchWord" />
+    <input type="submit" value="Sök" />
+</form>
 <table class="table" style="width:100%">
 <tr>
-   <th>Name</th>
-   <th>Birthday</th>
-   <th>Country</th>
-   <th>Email</th>
+       <th>Id
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="CustId" asp-route-order="asc">
+       <i class='bx bx-chevron-up' ></i></a>
+
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="CustId" asp-route-order="desc">
+       <i class='bx bx-chevron-down' ></i></a>
+   </th>
+   <th>Name
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="GivenName" asp-route-order="asc">
+       <i class='bx bx-chevron-up' ></i></a>
+
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="GivenName" asp-route-order="desc">
+       <i class='bx bx-chevron-down' ></i></a>
+   </th>
+   <th>Surname
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="SurName" asp-route-order="asc">
+       <i class='bx bx-chevron-up' ></i></a>
+
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="SurName" asp-route-order="desc">
+       <i class='bx bx-chevron-down' ></i></a>
+   </th>
+   <th>Social number 
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="NationalId" asp-route-order="asc">
+       <i class='bx bx-chevron-up' ></i></a>
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="NationalId" asp-route-order="desc">
+       <i class='bx bx-chevron-down' ></i></a>
+   </th>
+   <th>City
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="City" asp-route-order="asc">
+       <i class='bx bx-chevron-up' ></i></a>
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="City" asp-route-order="desc">
+       <i class='bx bx-chevron-down' ></i></a>
+   </th>
+   <th>Address
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="Streetaddress" asp-route-order="asc">
+       <i class='bx bx-chevron-up' ></i></a>
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="Streetaddress" asp-route-order="asc">
+       <i class='bx bx-chevron-down' ></i></a>
+   </th>
    <th>More</th>
 </tr>
 
     @foreach(var Customer in Model.Customers)
     {
         <tr>
-            <td>@Customer.Givenname @Customer.Surname</td>
-            <td>@Customer.Birthday</td>
-            <td>@Customer.Country</td>
-            <td>@Customer.EmailAddress</td>
+            <td>@Customer.Id</td>
+            <td>@Customer.Givenname</td>
+             <td>@Customer.Surname</td>
+            <td>@Customer.NationalId</td>
+            <td>@Customer.City</td>
+            <td>@Customer.Streetaddress</td>
      <td>   <a asp-page="/Customer" asp-route-CustomerId="@Customer.Id">Details</a> </td>
        </tr>
     }
