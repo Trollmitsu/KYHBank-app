@@ -9,10 +9,10 @@
 <table class="table" style="width:100%">
 <tr>
        <th>Id
-       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="CustId" asp-route-order="asc">
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="id" asp-route-order="asc">
        <i class='bx bx-chevron-up' ></i></a>
 
-       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="CustId" asp-route-order="desc">
+       <a asp-page="/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="id" asp-route-order="desc">
        <i class='bx bx-chevron-down' ></i></a>
    </th>
    <th>Name
@@ -55,11 +55,30 @@
         <tr>
             <td>@Customer.Id</td>
             <td>@Customer.Givenname</td>
-             <td>@Customer.Surname</td>
+            <td>@Customer.Surname</td>
             <td>@Customer.NationalId</td>
             <td>@Customer.City</td>
             <td>@Customer.Streetaddress</td>
      <td>   <a asp-page="/Customer" asp-route-CustomerId="@Customer.Id">Details</a> </td>
        </tr>
     }
+     <tr>
+        <td>
+        @if (Model.PageNo > 1)
+        {
+            <a asp-page="/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)">Prev</a>
+        }
+        </td>
+        <td></td>
+        <td></td>
+        <td>Visar Sidan @Model.PageNo av totalt @Model.TotalPageCount</td>
+        <td></td>
+        <td></td>
+        <td>
+            @if (Model.PageNo < Model.TotalPageCount)
+            {
+                <a asp-page="/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo+1)">Next</a>
+            }
+            </td>
+    </tr>
 </table>

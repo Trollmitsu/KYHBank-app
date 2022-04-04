@@ -24,6 +24,18 @@ namespace BankStartWeb.Pages
         public void OnGet()
         {
 
+            var customers = Customers.ToList();
+            var accounts = Accounts.ToList();
+            //  Customers = _context.Include(x => x.
+
+            //    Id = x.Id,
+            //    Givenname = x.Givenname,
+            //    Surname = x.Surname,
+            //    NationalId = x.NationalId,
+            //    City = x.City,
+            //    Streetaddress = x.Streetaddress
+            //).ToList();  
+
         }
     }
 }

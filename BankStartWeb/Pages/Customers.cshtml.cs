@@ -1,4 +1,5 @@
 using BankStartWeb.Data;
+using BankStartWeb.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,13 @@ namespace BankStartWeb.Pages
         {
             _context = context;
         }
+        public string SortOrder { get; set; }
+
+        public string SortCol { get; set; }
+
+        public int PageNo { get; set; }
+
+        public int TotalPageCount { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SearchWord { get; set; }
@@ -29,9 +37,14 @@ namespace BankStartWeb.Pages
         }
         public List<CustomersViewModel> Customers = new List<CustomersViewModel>();
 
-        public void OnGet(string searchWord, string col = "id", string order = "asc")
+        public void OnGet(string searchWord, string col = "id", string order = "asc", int pageno = 1)
         {
+
+            PageNo = pageno;
             SearchWord = searchWord;
+            SortCol = col;
+            SortOrder = order;
+
             var o = _context.Customers.AsQueryable();
          
             if (!string.IsNullOrEmpty(SearchWord))
@@ -41,50 +54,55 @@ namespace BankStartWeb.Pages
                               || ord.Id.ToString() == (SearchWord)
                 );
 
-            if (col == "GivenName")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.Givenname);
-                else
-                    o = o.OrderByDescending(ord => ord.Givenname);
-            }
-            else if (col == "SurName")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.Surname);
-                else
-                    o = o.OrderByDescending(ord => ord.Surname);
-            }
-            else if (col == "NationalId")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.NationalId);
-                else
-                    o = o.OrderByDescending(ord => ord.NationalId);
-            }
-            else if (col == "City")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.City);
-                else
-                    o = o.OrderByDescending(ord => ord.City);
-            }
-            else if (col == "Streetaddress")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.Streetaddress);
-                else
-                    o = o.OrderByDescending(ord => ord.Streetaddress);
-            }
-            else if (col == "CustId")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.Id);
-                else
-                    o = o.OrderByDescending(ord => ord.Id);
-            }
+            o = o.OrderBy(col, order == "asc" ? ExtensionMethods.QuerySortOrder.Asc : ExtensionMethods.QuerySortOrder.Desc);
 
-            Customers = o.Select(x => new CustomersViewModel
+            //if (col == "givenname")
+            //{
+            //    if (order == "asc")
+            //        o = o.orderby(ord => ord.givenname);
+            //    else
+            //        o = o.orderbydescending(ord => ord.givenname);
+            //}
+            //else if (col == "surname")
+            //{
+            //    if (order == "asc")
+            //        o = o.orderby(ord => ord.surname);
+            //    else
+            //        o = o.orderbydescending(ord => ord.surname);
+            //}
+            //else if (col == "nationalid")
+            //{
+            //    if (order == "asc")
+            //        o = o.orderby(ord => ord.nationalid);
+            //    else
+            //        o = o.orderbydescending(ord => ord.nationalid);
+            //}
+            //else if (col == "city")
+            //{
+            //    if (order == "asc")
+            //        o = o.orderby(ord => ord.city);
+            //    else
+            //        o = o.orderbydescending(ord => ord.city);
+            //}
+            //else if (col == "streetaddress")
+            //{
+            //    if (order == "asc")
+            //        o = o.orderby(ord => ord.streetaddress);
+            //    else
+            //        o = o.orderbydescending(ord => ord.streetaddress);
+            //}
+            //else if (col == "custid")
+            //{
+            //    if (order == "asc")
+            //        o = o.orderby(ord => ord.id);
+            //    else
+            //        o = o.orderbydescending(ord => ord.id);
+            //}
+
+            var pageResult = o.GetPaged(PageNo, 50);
+            TotalPageCount = pageResult.PageCount;
+
+            Customers = pageResult.Results.Select(x => new CustomersViewModel
             {
                 Id = x.Id,
                 Givenname = x.Givenname,
