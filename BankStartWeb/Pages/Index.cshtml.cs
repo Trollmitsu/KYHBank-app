@@ -17,13 +17,20 @@ namespace BankStartWeb.Pages
         }
 
 
-        public List<Customer> Customers { get; set; }
-        public List<Account> Accounts { get; set; }
+        public int CustomerCount { get; set; }
+
+        public int AccountCount { get; set; }
+
+        public decimal BalanceCount { get; set; }
+
+        
 
 
         public void OnGet()
         {
-           
+           CustomerCount = _context.Customers.Count();
+            AccountCount = _context.Accounts.Count();
+            BalanceCount = _context.Accounts.Sum(a => a.Balance);
         }
     }
 }

@@ -3,15 +3,17 @@
 @{
 }
 <h3>Total Balance</h3>
-    @Model.Account.Balance kr
+    <h4>@Model.Account.Balance kr</h4>
 
-    <p><a asp-page="/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
+<p><a asp-page="/Swish" asp-route-customerId="@Model.CustomerId">Send Money</a></p>
+    
 <table class="table" style="width:100%">
     <tr>
         
-        <th>Amount</th>
+        
         <th>Type</th>
         <th>Date</th>
+        <th>Amount</th>
         <th>Operation</th>
         <th>New Balance</th>
     </tr>
@@ -19,12 +21,13 @@
     @foreach(var Transaction in Model.transaction)
     {
      <tr>
-        <td>@Transaction.Amount</td>
         <td>@Transaction.Type</td>
         <td>@Transaction.Date</td>
+        <td>@Transaction.Amount</td>
         <td>@Transaction.Operation</td>
         <td>@Transaction.NewBalance</td>
     </tr>
     }
 </table>
+<p><a asp-page="/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
 

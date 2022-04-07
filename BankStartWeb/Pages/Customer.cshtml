@@ -15,6 +15,7 @@
     <p>@Model.Customer.Zipcode, @Model.Customer.City</p>
     
 
+
     <table class="table" style="width:100%">
         <tr>
             <th>Account Number</th>
@@ -41,7 +42,7 @@
    
 
     </table>
-    <h3>Total Balance</h3>
-     @sum.ToString("C")
+    <h3>Total Balance In All Accounts</h3>
+     <h4>@sum.ToString("C")</h4>
 
      <p><a asp-page="/Customers">Back To Customers List</a></p>
