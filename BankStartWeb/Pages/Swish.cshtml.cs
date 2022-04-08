@@ -33,7 +33,6 @@ namespace BankStartWeb.Pages
 
         public void OnGet(int CustomerId)
         {
-
             Customer = _context.Customers.Include(a => a.Accounts).First(s => s.Id == CustomerId);
             
             AllAccounts = Customer.Accounts.Select(a => new SelectListItem
@@ -46,6 +45,7 @@ namespace BankStartWeb.Pages
                 Value = "",
                 Text = "Please select Account"
             });
+            //CustomersAccountId = _context.Customers.Include(a => a.Accounts.Any(s => s.CustomersAccountId));
         }
        public IActionResult OnPost()
         {
