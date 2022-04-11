@@ -34,14 +34,15 @@ namespace BankStartWeb.Pages
 
         public int CustomerId { get; set; }
         public List<TransactionsViewModel> transaction { get; set; }
-        public void OnGet(int AccountId, int customerId)
+        public int AccoundId { get; set; }
+        public void OnGet(int accountId, int customerId)
         {
             Account = _context.Accounts
                 .Include(a => a.Transactions)
-                .First(a => a.Id == AccountId);
+                .First(a => a.Id == accountId);
             transaction = Account.Transactions.Select(a => new TransactionsViewModel
             {
-                Id = a.Id,
+                Id = accountId,
                 Type = a.Type,
                 Operation = a.Operation,
                 Date = a.Date,
@@ -50,6 +51,7 @@ namespace BankStartWeb.Pages
             }).OrderByDescending(e=>e.Date).ToList();
 
             CustomerId = customerId;
+            AccoundId = accountId;
         }
         public IActionResult OnPostCustomerId(int customerId)
         {

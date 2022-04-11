@@ -1,0 +1,25 @@
+﻿@page
+@model BankStartWeb.Pages.depositModel
+@{
+}
+
+ <form method="post">
+ <div class="form-group">
+                <label asp-for="Amount">Amount</label>
+                <input class="form-control" asp-for="Amount">
+                <span asp-validation-for="Amount" class="field-validation-error"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type">Accounts</label>
+                <select class="form-control" asp-for="Type" asp-items="@Model.Types" >
+                </select>
+                <span asp-validation-for="Type" class="field-validation-error"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="Operation">Accounts</label>
+                <select class="form-control" asp-for="Operation" asp-items="@Model.Operations">
+                </select>
+                <span asp-validation-for="Operation" class="field-validation-error"></span>
+            </div>
+            <button type="submit" class="btn" asp-route-customerId="@Model.CustomerId" asp-route-accountId="@Model.AccountId">Send</button>
+            </form>
