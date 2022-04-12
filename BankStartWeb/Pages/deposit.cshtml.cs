@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BankStartWeb.Pages
 {
@@ -17,11 +18,16 @@ namespace BankStartWeb.Pages
         }
         [BindProperty]
         public string Type { get; set; }
+
         [BindProperty]
         public string Operation { get; set; }
+
         [BindProperty]
         public DateTime Date { get; set; }
+
         [BindProperty]
+        [Required]
+        //[Range(100, 5000)]
         public decimal Amount { get; set; }
 
         public int AccountId { get; set; }
@@ -45,6 +51,18 @@ namespace BankStartWeb.Pages
         {
             if (ModelState.IsValid)
             {
+                if (Amount < 100)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Beloppet är för lågt");
+                }
+                else if (Amount > 5000)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Beloppet är för hög");
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
                 Customer = _context.Customers.First(e => e.Id == CustomerId);
                 Account = _context.Accounts.Include(c=>c.Transactions).First(e => e.Id == AccountId);
                 Account.Transactions.Add(new Transaction
@@ -58,8 +76,15 @@ namespace BankStartWeb.Pages
 
                 Account.Balance = Account.Balance + Amount;
                 _context.SaveChanges();
+                return RedirectToPage("/Customer", new { CustomerId });
             }
-            return RedirectToPage("/Customer", new {CustomerId});
+
+            types();
+            operations();
+
+            return Page();
+
+            
         }
         private void types()
         {
