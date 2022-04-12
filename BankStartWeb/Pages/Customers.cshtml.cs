@@ -99,7 +99,7 @@ namespace BankStartWeb.Pages
             //        o = o.orderbydescending(ord => ord.id);
             //}
 
-            var pageResult = o.GetPaged(PageNo, 50);
+            var pageResult = o.GetPaged(PageNo, 20);
             TotalPageCount = pageResult.PageCount;
 
             Customers = pageResult.Results.Select(x => new CustomersViewModel

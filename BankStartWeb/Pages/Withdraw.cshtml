@@ -1,0 +1,14 @@
+﻿@page
+@model BankStartWeb.Pages.WithdrawModel
+@{
+}
+
+ <form method="post">
+ <div class="form-group">
+                <label asp-for="Amount">Amount</label>
+                <input class="form-control" asp-for="Amount">
+                <span asp-validation-for="Amount" class="field-validation-error"></span>
+            </div>
+            
+            <button type="submit" class="btn" asp-route-customerId="@Model.CustomerId" asp-route-accountId="@Model.AccountId">Withdraw</button>
+            </form>
