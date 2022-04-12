@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages
 {
-    [BindProperties]
+    
     public class depositModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -15,10 +15,15 @@ namespace BankStartWeb.Pages
         {
             _context = context;
         }
+        [BindProperty]
         public string Type { get; set; }
+        [BindProperty]
         public string Operation { get; set; }
+        [BindProperty]
         public DateTime Date { get; set; }
+        [BindProperty]
         public decimal Amount { get; set; }
+
         public int AccountId { get; set; }
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
@@ -45,7 +50,7 @@ namespace BankStartWeb.Pages
                 Account.Transactions.Add(new Transaction
                 {
                     Type = Type,
-                    Date = Date,
+                    Date = DateTime.Now,
                     Amount = Amount,
                     Operation = Operation,
                     NewBalance = Account.Balance + Amount
