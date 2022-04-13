@@ -8,13 +8,15 @@ public class DataInitializer
 {
     private readonly ApplicationDbContext _dbContext;
     private readonly UserManager<IdentityUser> _userManager;
-
+    private readonly ApplicationDbContext _context;
 
     public DataInitializer(ApplicationDbContext dbContext,
-        UserManager<IdentityUser> userManager)
+        UserManager<IdentityUser> userManager, 
+        ApplicationDbContext context)
     {
         _dbContext = dbContext;
         _userManager = userManager;
+        _context = context;
     }
 
 
@@ -22,6 +24,45 @@ public class DataInitializer
     {
         _dbContext.Database.Migrate();
         SeedCustomers();
+        SeedRoles();
+        SeedUsers();
+    }
+    private void SeedUsers()
+    {
+        CreateRolesIfNotExists("stefan.holmberg@systementor.se", "Hejsan123#",
+            new[] { "Admin" });
+
+        CreateRolesIfNotExists("stefan.holmberg@customer.banken.se", "Hejsan123#",
+            new[] { "Cashier" });
+
+    }
+
+    private void CreateRolesIfNotExists(string email, string password, string[] roles)
+    {
+        if (_userManager.FindByEmailAsync(email).Result != null) return;
+
+        var user = new IdentityUser
+        {
+            UserName = email,
+            Email = email,
+            EmailConfirmed = true
+        };
+        _userManager.CreateAsync(user, password).Wait();
+        _userManager.AddToRolesAsync(user, roles).Wait();
+    }
+
+    private void SeedRoles()
+    {
+        CreateRolesIfNotExists("Admin");
+        CreateRolesIfNotExists("Cashier");
+    }
+
+    private void CreateRolesIfNotExists(string rolename)
+    {
+        if (_context.Roles.Any(r => r.Name == rolename))
+            return;
+        _context.Roles.Add(new IdentityRole { Name = rolename, NormalizedName = rolename });
+        _context.SaveChanges();
     }
 
     private void SeedCustomers()
