@@ -21,7 +21,7 @@
             <th>Account Number</th>
             <th>Account Type</th>
             <th>Money</th>
-            <th>Transactions</th>
+            
         </tr>
         @{
             decimal sum = 0;
@@ -31,11 +31,11 @@
     {
         sum += account.Balance;
         <tr>
-            <td>@account.Id</td>
+            <td><a asp-page="/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id">@account.Id</a></td>
             <td>@account.AccountType</td>
             <td>@account.Balance</td>
             
-            <th><a asp-page="/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id"> See More </a></th>
+            
         </tr>
         
     }

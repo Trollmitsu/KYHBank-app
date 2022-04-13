@@ -24,12 +24,14 @@ namespace BankStartWeb.Pages
         public string AccountId { get; set; }
 
         
-        public List<SelectListItem> AllAccounts { get; set; }
+        public string Type { get; set; }
 
         
-       
-        [BindProperty]
-        public string Message { get; set; }
+        public string Operation { get; set; }
+
+
+        public List<SelectListItem> AllAccounts { get; set; }
+
 
         [BindProperty]
         public decimal Amount { get; set; }
@@ -60,24 +62,38 @@ namespace BankStartWeb.Pages
             if (ModelState.IsValid)
             {
 
-                var Account = _context.Accounts.Include(e => e.Transactions).First(s => s.Id == Id);
-                //Account.Transactions.Add(new Transaction
-                //{
-                //    Id = Id,
-                //    Amount = Amount,
-                //    Date = DateTime.Now,
-                //    Operation = Operation,
-                //    Type = Type,
-                //    NewBalance = Account.Balance + Amount
+                var reciveraccount = _context.Accounts.Include(e => e.Transactions).First(s => s.Id == Id);
+                var senderaccount = _context.Accounts.Include(e => e.Transactions).First(e => e.Id == CustomerId);
 
-                //});
-
-                if (_context.Accounts.Any(e => e.Id == Id))
+                reciveraccount.Transactions.Add(new Transaction
                 {
+                    Id = Id,
+                    Amount = Amount,
+                    Date = DateTime.Now,
+                    Operation = "ATM Transfer",
+                    Type = "Credit",
+                    NewBalance = reciveraccount.Balance + Amount
 
-                    Account.Balance = Account.Balance + Amount;
+                });
+                senderaccount.Transactions.Add(new Transaction
+                {
+                    Type = "Credit",
+                    Operation = "ATM Transfer",
+                    Date = DateTime.Now,
+                    Amount = Amount,
+                    NewBalance = senderaccount.Balance - Amount
+                });
 
+              //  CustomerId.Balance = CustomerId.Balance - Amount;
+               
+
+
+                if (_context.Accounts.Any(e => e.Id == Id && _context.Customers.Any(e => e.Id == CustomerId)))
+                {
+                    reciveraccount.Balance = reciveraccount.Balance + Amount;
+                    senderaccount.Balance = senderaccount.Balance - Amount;
                 }
+               
 
                 _context.SaveChanges();
                 return RedirectToPage("/Customer", new { CustomerId });
