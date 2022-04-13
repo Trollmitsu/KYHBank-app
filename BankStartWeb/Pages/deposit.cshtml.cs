@@ -49,6 +49,9 @@ namespace BankStartWeb.Pages
 
         public IActionResult OnPost(int AccountId, int CustomerId)
         {
+            Customer = _context.Customers.First(e => e.Id == CustomerId);
+            Account = _context.Accounts.Include(c => c.Transactions).First(e => e.Id == AccountId);
+
             if (ModelState.IsValid)
             {
                 if (Amount < 100)
@@ -63,8 +66,6 @@ namespace BankStartWeb.Pages
 
             if (ModelState.IsValid)
             {
-                Customer = _context.Customers.First(e => e.Id == CustomerId);
-                Account = _context.Accounts.Include(c=>c.Transactions).First(e => e.Id == AccountId);
                 Account.Transactions.Add(new Transaction
                 {
                     Type = Type,
