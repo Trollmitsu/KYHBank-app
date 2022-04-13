@@ -36,14 +36,19 @@ namespace BankStartWeb.Pages
             CustomerId = customerId;
         }
 
-        public IActionResult OnPost(int AccountId, int CustomerId)
+        public IActionResult OnPost(int accountId, int customerId)
         {
+            Customer = _context.Customers.First(e => e.Id == customerId);
+            Account = _context.Accounts.Include(c => c.Transactions).First(e => e.Id == accountId);
             
+            if (Account.Balance < Amount)
+            {
+                ModelState.AddModelError("Amount", "Finns inte tillräckligt mycket pengar");
+            }
 
             if (ModelState.IsValid)
             {
-                Customer = _context.Customers.First(e => e.Id == CustomerId);
-                Account = _context.Accounts.Include(c => c.Transactions).First(e => e.Id == AccountId);
+               
                 Account.Transactions.Add(new Transaction
                 {
                     Type =  "Credit",
@@ -55,9 +60,14 @@ namespace BankStartWeb.Pages
 
                 Account.Balance = Account.Balance - Amount;
                 _context.SaveChanges();
-                
+                return RedirectToPage("/Customer", new { CustomerId });
+            
             }
-            return RedirectToPage("/Customer", new { CustomerId });
+
+            AccountId = accountId;
+            CustomerId = customerId;
+
+            return Page();
         }
     }
 }

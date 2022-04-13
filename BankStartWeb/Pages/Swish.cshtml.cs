@@ -1,5 +1,6 @@
 using BankStartWeb.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -59,11 +60,19 @@ namespace BankStartWeb.Pages
         }
        public IActionResult OnPost(int Id, int CustomerId)
         {
+
+            var reciveraccount = _context.Accounts.Include(e => e.Transactions).First(s => s.Id == Id);
+            var senderaccount = _context.Accounts.Include(e => e.Transactions).First(e => e.Id == CustomerId);
+
+            if (senderaccount.Balance < Amount)
+            {
+                ModelState.AddModelError("Amount","Finns inte tillräckligt mycket pengar");
+            }
+
             if (ModelState.IsValid)
             {
 
-                var reciveraccount = _context.Accounts.Include(e => e.Transactions).First(s => s.Id == Id);
-                var senderaccount = _context.Accounts.Include(e => e.Transactions).First(e => e.Id == CustomerId);
+
 
                 reciveraccount.Transactions.Add(new Transaction
                 {
@@ -91,7 +100,7 @@ namespace BankStartWeb.Pages
                 {
                     reciveraccount.Balance = reciveraccount.Balance + Amount;
                     senderaccount.Balance = senderaccount.Balance - Amount;
-                    
+                   
                 }
                
 
