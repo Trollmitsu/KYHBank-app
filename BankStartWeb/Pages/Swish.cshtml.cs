@@ -67,10 +67,9 @@ namespace BankStartWeb.Pages
 
                 reciveraccount.Transactions.Add(new Transaction
                 {
-                    Id = Id,
                     Amount = Amount,
                     Date = DateTime.Now,
-                    Operation = "ATM Transfer",
+                    Operation = "Payment",
                     Type = "Credit",
                     NewBalance = reciveraccount.Balance + Amount
 
@@ -78,7 +77,7 @@ namespace BankStartWeb.Pages
                 senderaccount.Transactions.Add(new Transaction
                 {
                     Type = "Credit",
-                    Operation = "ATM Transfer",
+                    Operation = "Transfer",
                     Date = DateTime.Now,
                     Amount = Amount,
                     NewBalance = senderaccount.Balance - Amount
@@ -92,6 +91,7 @@ namespace BankStartWeb.Pages
                 {
                     reciveraccount.Balance = reciveraccount.Balance + Amount;
                     senderaccount.Balance = senderaccount.Balance - Amount;
+                    
                 }
                
 

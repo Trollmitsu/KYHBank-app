@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankStartWeb.Pages
 {
-    [Authorize(Roles = "Admin")]
+
     public class PrivacyModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
