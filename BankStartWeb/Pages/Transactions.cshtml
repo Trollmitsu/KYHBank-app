@@ -8,9 +8,9 @@
     <h4>@Model.Account.Balance kr</h4>
 
 
-<p><button class="btn-sm"><a asp-page="/Swish" asp-route-customerId="@Model.CustomerId">Send Money</a> </button>
-   <button class="btn-sm"> <a asp-page="/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit </a></button>
-   <button class="btn-sm"> <a asp-page="/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw </a></button>
+<p><a class="btn" asp-page="/Swish" asp-route-customerId="@Model.CustomerId">Send Money</a>
+    <a class="btn" asp-page="/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit </a>
+    <a class="btn" asp-page="/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw </a>
 </p>
 
     
@@ -35,6 +35,42 @@
         <td>@Transaction.NewBalance</td>
     </tr>
     }
+     
+     
 </table>
-<p><a asp-page="/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
+<a class="btn" href="javascript:fetchMore();">See more</a>
+
+<p><a class="btn" asp-page="/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
+
+@section Scripts
+{
+    <script>
+        rowNo = 10;
+        function fetchMore() {
+            fetch("View?handler=FetchMore&rowNo=" + rowNo + "&personId=@Model.AccoundId")
+                .then((response) => response.json())
+                .then((json) => {
+                        rowNo = rowNo + 20;
+                        json.Transaction.forEach(tableElements);
+                    }
+                );
+        }
+
+
+
+        function tableElements(element) {
+            document.querySelector('#posts-table tbody').innerHTML +=
+                ` <tr>
+        <td>${element.Type}</td>
+        <td>${element.Date}</td>
+        <td>${element.Amount}</td>
+        <td>${element.Operation}</td>
+        <td>${element.New Balance}</td>
+    </tr>
+    <a class="btn" onclick="fetchEvaluation(${element.id})">See more </a>
+    `;
+        }
+
+        </script>
+}
 

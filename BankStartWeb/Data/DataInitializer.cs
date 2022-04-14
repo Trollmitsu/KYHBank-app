@@ -35,6 +35,9 @@ public class DataInitializer
         CreateRolesIfNotExists("stefan.holmberg@customer.banken.se", "Hejsan123#",
             new[] { "Cashier" });
 
+        CreateRolesIfNotExists("superAdmin@Admin.se", "Hejsan123#",
+            new[] { "Admin", "Cashier" });
+
     }
 
     private void CreateRolesIfNotExists(string email, string password, string[] roles)
@@ -67,7 +70,7 @@ public class DataInitializer
 
     private void SeedCustomers()
     {
-        while (_dbContext.Customers.Count() < 500)
+        while (_dbContext.Customers.Count() < 5000)
         {
             var a =
                 GenerateCustomer();
