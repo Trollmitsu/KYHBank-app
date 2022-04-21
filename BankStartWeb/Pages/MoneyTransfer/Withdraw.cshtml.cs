@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BankStartWeb.Pages
 {
@@ -46,6 +47,11 @@ namespace BankStartWeb.Pages
                 ModelState.AddModelError("Amount", "Finns inte tillräckligt mycket pengar");
             }
 
+            if ( Amount < 0)
+            {
+                ModelState.AddModelError("Amount", "Får inte vara negativt");
+            }
+
             if (ModelState.IsValid)
             {
                
@@ -60,7 +66,7 @@ namespace BankStartWeb.Pages
 
                 Account.Balance = Account.Balance - Amount;
                 _context.SaveChanges();
-                return RedirectToPage("/Customer", new { CustomerId });
+                return RedirectToPage("/AllCustomers/Customer", new { customerId });
             
             }
 

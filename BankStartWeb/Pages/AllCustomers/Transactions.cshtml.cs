@@ -59,7 +59,7 @@ namespace BankStartWeb.Pages
         public IActionResult OnPostCustomerId(int customerId)
         {
             Customer = _context.Customers.Include( s=>s.Accounts ).First( a => a.Id == customerId);
-            return RedirectToPage("/Customer", new {customerId});
+            return RedirectToPage("/AllCustomers/Customer", new {customerId});
         }
 
         public IActionResult OnGetFetchMore(int personId, int rowNo)

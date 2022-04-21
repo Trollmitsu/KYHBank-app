@@ -77,7 +77,7 @@ namespace BankStartWeb.Pages
 
                 Account.Balance = Account.Balance + Amount;
                 _context.SaveChanges();
-                return RedirectToPage("/Customer", new { CustomerId });
+                return RedirectToPage("/AllCustomers/Customer", new { CustomerId });
             }
 
             types();

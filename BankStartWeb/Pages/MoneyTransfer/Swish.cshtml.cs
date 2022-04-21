@@ -105,7 +105,7 @@ namespace BankStartWeb.Pages
                
 
                 _context.SaveChanges();
-                return RedirectToPage("/Customer", new { CustomerId });
+                return RedirectToPage("/AllCustomers/Customer", new { CustomerId });
             }
             
             return Page();

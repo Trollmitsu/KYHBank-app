@@ -31,7 +31,7 @@
     {
         sum += account.Balance;
         <tr>
-            <td><a class="btn" asp-page="/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id">@account.Id</a></td>
+            <td><a class="btn" asp-page="/AllCustomers/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id">@account.Id</a></td>
             <td>@account.AccountType</td>
             <td>@account.Balance</td>
             
@@ -45,5 +45,5 @@
     <h3>Total Balance In All Accounts</h3>
      <h4>@sum.ToString("C")</h4>
 
-     <p><a class="btn" asp-page="/Customers">Back To Customers List</a></p>
+     <p><a class="btn" asp-page="/AllCustomers/Customers">Back To Customers List</a></p>
      

@@ -59,7 +59,7 @@
             <td>@Customer.NationalId</td>
             <td>@Customer.City</td>
             <td>@Customer.Streetaddress</td>
-     <td>   <a asp-page="/Customer" asp-route-CustomerId="@Customer.Id">Details</a> </td>
+     <td>   <a asp-page="/AllCustomers/Customer" asp-route-CustomerId="@Customer.Id">Details</a> </td>
        </tr>
     }
      <tr>
@@ -77,7 +77,7 @@
         <td>
             @if (Model.PageNo < Model.TotalPageCount)
             {
-                <a asp-page="/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo+1)">Next</a>
+                <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo+1)">Next</a>
             }
             </td>
     </tr>
