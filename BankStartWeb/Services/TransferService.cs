@@ -11,13 +11,13 @@ namespace BankStartWeb.Services
         {
             _context = context;
         }
-       
 
-        //public ITransferService.SendingMoneyStatus Withdraw(DateTime Date, decimal Amount, string Type, string Operation)
-        //{
-        //    if (CheckCorrectAmount(Amount < 0) == false)
-        //        return ITransferService.SendingMoneyStatus.InsufficientFunds;
-        //}
+
+        public ITransferService.SendingMoneyStatus Withdraw(DateTime Date, decimal Amount)
+        {
+            if (CheckCorrectAmount(Amount < 0) == false)
+                return ITransferService.SendingMoneyStatus.InsufficientFunds;
+        }
 
         //public ITransferService.SendingMoneyStatus Deposit(DateTime Date, decimal Amount, string Type, string Operation)
         //{
