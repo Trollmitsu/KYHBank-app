@@ -16,10 +16,10 @@
             NegativeAmount
         }
 
-        SendingMoneyStatus Withdraw(DateTime Date, decimal Amount, string Type, string Operation);
+        SendingMoneyStatus Withdraw(DateTime Date, decimal Amount);
 
-        SendingMoneyStatus Deposit(DateTime Date, decimal Amount, string Type, string Operation);
+        SendingMoneyStatus Deposit(DateTime Date, decimal Amount);
 
-        SendingMoneyStatus Swish(DateTime Date, decimal Amount, string Type, string Operation);
+        SendingMoneyStatus Swish(DateTime Date, decimal Amount);
     }
 }
