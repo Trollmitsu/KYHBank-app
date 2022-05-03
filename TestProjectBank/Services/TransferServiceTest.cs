@@ -15,11 +15,11 @@ namespace TestProjectBank.Services
 
         public TransferServiceTest()
         {
-                var options = new DbContextOptions<ApplicationDbContext>()
-                    .UseInMemoryDatabase(databaseName: "test")
-                    .Options;
-                _context = new ApplicationDbContext()options;
-                _sut = new TransferServiceTest(_context);
+        //        var options = new DbContextOptions<ApplicationDbContext>()
+        //            .UseInMemoryDatabase(databaseName: "test")
+        //            .Options;
+        //        _context = new ApplicationDbContext()options;
+        //        _sut = new TransferServiceTest(_context);
         }
     }
 }

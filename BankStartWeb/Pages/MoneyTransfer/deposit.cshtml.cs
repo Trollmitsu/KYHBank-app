@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using BankStartWeb.Services;
 
 namespace BankStartWeb.Pages
 {
@@ -11,10 +12,12 @@ namespace BankStartWeb.Pages
     public class depositModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITransferService _transferService;
 
-        public depositModel(ApplicationDbContext context)
+        public depositModel(ApplicationDbContext context, ITransferService transferService)
         {
             _context = context;
+            _transferService = transferService;
         }
         [BindProperty]
         public string Type { get; set; }
@@ -52,40 +55,37 @@ namespace BankStartWeb.Pages
             Customer = _context.Customers.First(e => e.Id == CustomerId);
             Account = _context.Accounts.Include(c => c.Transactions).First(e => e.Id == AccountId);
 
-            if (ModelState.IsValid)
-            {
-                if (Amount < 100)
-                {
-                    ModelState.AddModelError(nameof(Amount), "Beloppet är för lågt");
-                }
-                else if (Amount > 5000)
-                {
-                    ModelState.AddModelError(nameof(Amount), "Beloppet är för hög");
-                }
-            }
+           
 
             if (ModelState.IsValid)
             {
-                Account.Transactions.Add(new Transaction
-                {
-                    Type = Type,
-                    Date = DateTime.Now,
-                    Amount = Amount,
-                    Operation = Operation,
-                    NewBalance = Account.Balance + Amount
-                });
+                //if (Amount < 100)
+                //{
+                //    ModelState.AddModelError(nameof(Amount), "Beloppet är för lågt");
+                //    types();
+                //    operations();
+                //    return Page();
+                //}
+                //else if (Amount > 5000)
+                //{
+                //    ModelState.AddModelError(nameof(Amount), "Beloppet är för hög");
+                //    types();
+                //    operations();
+                //    return Page();
+                //}
+                var deposit = _transferService.Deposit(AccountId, Amount);
 
-                Account.Balance = Account.Balance + Amount;
-                _context.SaveChanges();
+                if (deposit == ITransferService.Status.NegativeAmount)
+                {
+                    ModelState.AddModelError(nameof(Amount),"Cannot deposit negative amount");
+                    types();
+                    operations();
+                    return Page();
+                }
+                
                 return RedirectToPage("/AllCustomers/Customer", new { CustomerId });
             }
-
-            types();
-            operations();
-
             return Page();
-
-            
         }
         private void types()
         {

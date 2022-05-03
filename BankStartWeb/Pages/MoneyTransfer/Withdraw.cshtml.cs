@@ -55,17 +55,17 @@ namespace BankStartWeb.Pages
             if (ModelState.IsValid)
             {
                
-                Account.Transactions.Add(new Transaction
-                {
-                    Type =  "Credit",
-                    Operation = "ATM Withdrawal",
-                    Date = DateTime.Now,
-                    Amount = Amount,
-                    NewBalance = Account.Balance - Amount
-                });
+                //Account.Transactions.Add(new Transaction
+                //{
+                //    Type =  "Credit",
+                //    Operation = "ATM Withdrawal",
+                //    Date = DateTime.Now,
+                //    Amount = Amount,
+                //    NewBalance = Account.Balance - Amount
+                //});
 
-                Account.Balance = Account.Balance - Amount;
-                _context.SaveChanges();
+                //Account.Balance = Account.Balance - Amount;
+                //_context.SaveChanges();
                 return RedirectToPage("/AllCustomers/Customer", new { customerId });
             
             }

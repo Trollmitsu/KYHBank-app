@@ -9,17 +9,18 @@
         //2) Det ska inte gå att överföra mer pengar än det som finns på kontot
         //3) Det ska inte gå att sätta in negativ belopp.
         //4) Det ska inte gå att ta ut negativa belopp.
-        public enum SendingMoneyStatus
+        public enum Status
         {
             ok,
             InsufficientFunds,
-            NegativeAmount
+            NegativeAmount,
+            Error
         }
 
-        SendingMoneyStatus Withdraw(DateTime Date, decimal Amount);
+        public Status Withdraw(int AccountId, decimal Amount);
 
-        SendingMoneyStatus Deposit(DateTime Date, decimal Amount);
+        public Status Deposit(int AccountId, decimal Amount);
 
-        SendingMoneyStatus Swish(DateTime Date, decimal Amount);
+        public Status Swish(int AccountId, int CustomerId);
     }
 }
