@@ -9,7 +9,7 @@
 <h4>@Model.Account.Balance kr</h4>
 
 
-<p><a class="btn" asp-page="/MoneyTransfer/Swish" asp-route-customerId="@Model.CustomerId">Send to another Account</a>
+<p><a class="btn" asp-page="/MoneyTransfer/Swish" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Send to another Account</a>
     <a class="btn" asp-page="/MoneyTransfer/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit </a>
     <a class="btn" asp-page="/MoneyTransfer/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw </a>
 </p>

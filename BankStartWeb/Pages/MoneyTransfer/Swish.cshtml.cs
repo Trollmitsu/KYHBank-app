@@ -5,112 +5,94 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using BankStartWeb.Services;
 
 
 namespace BankStartWeb.Pages
 {
+    
     public class SwishModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITransferService _transferService;
 
-        public SwishModel(ApplicationDbContext context)
+        public SwishModel(ApplicationDbContext context, ITransferService transferService)
         {
             _context = context;
+            _transferService = transferService;
         }
-
         [BindProperty]
-        public int Id { get; set; }
+        public int AccountId { get; set; }
 
-        [BindProperty]
-        public string AccountId { get; set; }
+        public int CustomerId { get; set; }
 
-        
         public string Type { get; set; }
 
         
         public string Operation { get; set; }
 
 
-        public List<SelectListItem> AllAccounts { get; set; }
+        public List<Account> Accounts { get; set; }
 
 
         [BindProperty]
         public decimal Amount { get; set; }
         
         public Customer Customer { get; set; }
-
+        [BindProperty]
+        public int ReceiverId { get; set; }
         
-        
 
-        public void OnGet(int CustomerId)
+        public void OnGet(int customerId, int accountId)
         {
+            AccountId = accountId;
+            CustomerId = customerId;
             Customer = _context.Customers.Include(a => a.Accounts).First(s => s.Id == CustomerId);
-            AllAccounts = Customer.Accounts.Select(a => new SelectListItem
+
+            Accounts = Customer.Accounts.Select(a => new Account
             {
-                Text = a.Id.ToString(),
-                Value = a.Id.ToString()
+                Id = a.Id,
             }).ToList();
-            AllAccounts.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = "Please select Account"
-            });
+            
+
 
             //CustomersAccountId = _context.Customers.Include(a => a.Accounts.Any(s => s.CustomersAccountId));
         }
        public IActionResult OnPost(int Id, int CustomerId)
-        {
-
-            var reciveraccount = _context.Accounts.Include(e => e.Transactions).First(s => s.Id == Id);
-            var senderaccount = _context.Accounts.Include(e => e.Transactions).First(e => e.Id == CustomerId);
-
-            if (senderaccount.Balance < Amount)
-            {
-                ModelState.AddModelError("Amount","Finns inte tillräckligt mycket pengar");
-            }
+       {
+           Id = AccountId;
+         
 
             if (ModelState.IsValid)
             {
+                Customer = _context.Customers.First(e => e.Id == CustomerId);
+                var swish = _transferService.Swish(Id, ReceiverId, Amount);
 
-
-
-                reciveraccount.Transactions.Add(new Transaction
+                if (swish == ITransferService.Status.NegativeAmount)
                 {
-                    Amount = Amount,
-                    Date = DateTime.Now,
-                    Operation = "Payment",
-                    Type = "Credit",
-                    NewBalance = reciveraccount.Balance + Amount
-
-                });
-                senderaccount.Transactions.Add(new Transaction
-                {
-                    Type = "Credit",
-                    Operation = "Transfer",
-                    Date = DateTime.Now,
-                    Amount = Amount,
-                    NewBalance = senderaccount.Balance - Amount
-                });
-
-              //  CustomerId.Balance = CustomerId.Balance - Amount;
-               
-
-
-                if (_context.Accounts.Any(e => e.Id == Id && _context.Customers.Any(e => e.Id == CustomerId)))
-                {
-                    reciveraccount.Balance = reciveraccount.Balance + Amount;
-                    senderaccount.Balance = senderaccount.Balance - Amount;
-                   
+                    ModelState.AddModelError(nameof(Amount), "Cannot send negative amount");
+                    return Page();
                 }
-               
 
-                _context.SaveChanges();
+                if (swish == ITransferService.Status.InsufficientFunds)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Cannot send more than your account balance");
+                    return Page();
+                }
+
+                if (swish == ITransferService.Status.Error)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Cannot Swish to same account");
+                    return Page();
+                }
                 return RedirectToPage("/AllCustomers/Customer", new { CustomerId });
             }
-            
+
+                
             return Page();
        }
 
+      
         
     }
 }

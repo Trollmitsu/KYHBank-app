@@ -8,7 +8,6 @@ using BankStartWeb.Services;
 
 namespace BankStartWeb.Pages
 {
-    
     public class depositModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -19,14 +18,12 @@ namespace BankStartWeb.Pages
             _context = context;
             _transferService = transferService;
         }
-        [BindProperty]
-        public string Type { get; set; }
 
-        [BindProperty]
-        public string Operation { get; set; }
+        [BindProperty] public string Type { get; set; }
 
-        [BindProperty]
-        public DateTime Date { get; set; }
+        [BindProperty] public string Operation { get; set; }
+
+        [BindProperty] public DateTime Date { get; set; }
 
         [BindProperty]
         [Required]
@@ -50,59 +47,56 @@ namespace BankStartWeb.Pages
             operations();
         }
 
-        public IActionResult OnPost(int AccountId, int CustomerId)
+        public IActionResult OnPost(int accountId, int customerId)
         {
+
+            AccountId = accountId;
+            CustomerId = customerId;
             Customer = _context.Customers.First(e => e.Id == CustomerId);
             Account = _context.Accounts.Include(c => c.Transactions).First(e => e.Id == AccountId);
 
-           
 
             if (ModelState.IsValid)
             {
-                //if (Amount < 100)
-                //{
-                //    ModelState.AddModelError(nameof(Amount), "Beloppet är för lågt");
-                //    types();
-                //    operations();
-                //    return Page();
-                //}
-                //else if (Amount > 5000)
-                //{
-                //    ModelState.AddModelError(nameof(Amount), "Beloppet är för hög");
-                //    types();
-                //    operations();
-                //    return Page();
-                //}
                 var deposit = _transferService.Deposit(AccountId, Amount);
+                
+                if (deposit == ITransferService.Status.Error)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Cannot deposit more than 7000kr");
+
+                    return Page();
+                }
 
                 if (deposit == ITransferService.Status.NegativeAmount)
                 {
-                    ModelState.AddModelError(nameof(Amount),"Cannot deposit negative amount");
+                    ModelState.AddModelError(nameof(Amount), "Cannot deposit negative amount");
                     types();
                     operations();
                     return Page();
                 }
-                
-                return RedirectToPage("/AllCustomers/Customer", new { CustomerId });
+
+                return RedirectToPage("/AllCustomers/Customer", new {CustomerId});
             }
+            types();
+            operations();
             return Page();
         }
+
         private void types()
         {
             Types = new List<SelectListItem>()
             {
-                new SelectListItem{Text = "Debit", Value = "Debit"},
-                new SelectListItem{Text = "Credit", Value = "Credit"}
+                new SelectListItem {Text = "Debit", Value = "Debit"},
+                new SelectListItem {Text = "Credit", Value = "Credit"}
             };
-
         }
+
         private void operations()
         {
             Operations = new List<SelectListItem>()
             {
-                new SelectListItem{Text = "Deposit Cash", Value = "Deposit Cash"}
+                new SelectListItem {Text = "Deposit Cash", Value = "Deposit Cash"}
             };
-
         }
     }
 }

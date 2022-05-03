@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using BankStartWeb.Services;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BankStartWeb.Pages
@@ -11,10 +12,12 @@ namespace BankStartWeb.Pages
     public class WithdrawModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITransferService _transferService;
 
-        public WithdrawModel(ApplicationDbContext context)
+        public WithdrawModel(ApplicationDbContext context, ITransferService transferService)
         {
             _context = context;
+            _transferService = transferService;
         }
 
         [BindProperty]
@@ -39,39 +42,46 @@ namespace BankStartWeb.Pages
 
         public IActionResult OnPost(int accountId, int customerId)
         {
+            AccountId = accountId;
+            CustomerId = customerId;
             Customer = _context.Customers.First(e => e.Id == customerId);
             Account = _context.Accounts.Include(c => c.Transactions).First(e => e.Id == accountId);
             
-            if (Account.Balance < Amount)
-            {
-                ModelState.AddModelError("Amount", "Finns inte tillräckligt mycket pengar");
-            }
-
-            if ( Amount < 0)
-            {
-                ModelState.AddModelError("Amount", "Får inte vara negativt");
-            }
+        
 
             if (ModelState.IsValid)
             {
-               
-                //Account.Transactions.Add(new Transaction
-                //{
-                //    Type =  "Credit",
-                //    Operation = "ATM Withdrawal",
-                //    Date = DateTime.Now,
-                //    Amount = Amount,
-                //    NewBalance = Account.Balance - Amount
-                //});
 
-                //Account.Balance = Account.Balance - Amount;
-                //_context.SaveChanges();
+                var Withdraw = _transferService.Withdraw(accountId, Amount);
+
+                if (Withdraw == ITransferService.Status.ok)
+                {
+                    _context.SaveChanges();
+                }
+                if (Withdraw == ITransferService.Status.Error)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Cannot withdraw more than 7000kr");
+
+                    return Page();
+                }
+
+                if (Withdraw == ITransferService.Status.InsufficientFunds)
+                {
+                    ModelState.AddModelError(nameof(Amount), "InsufficientFunds");
+
+                    return Page();
+                }
+
+                if (Withdraw == ITransferService.Status.NegativeAmount)
+                {
+                    ModelState.AddModelError(nameof(Amount), "Cannot Withdraw Negative Amount");
+                    return Page();
+                }
                 return RedirectToPage("/AllCustomers/Customer", new { customerId });
             
             }
 
-            AccountId = accountId;
-            CustomerId = customerId;
+            
 
             return Page();
         }

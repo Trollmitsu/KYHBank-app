@@ -21,6 +21,6 @@
 
         public Status Deposit(int AccountId, decimal Amount);
 
-        public Status Swish(int AccountId, int CustomerId);
+        public Status Swish(int AccountId, int ReceiverId, decimal Amount);
     }
 }
