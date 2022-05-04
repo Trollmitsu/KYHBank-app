@@ -66,7 +66,7 @@
         <td>
         @if (Model.PageNo > 1)
         {
-            <a asp-page="/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)">Prev</a>
+              <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)">Prev</a>
         }
         </td>
         <td></td>
