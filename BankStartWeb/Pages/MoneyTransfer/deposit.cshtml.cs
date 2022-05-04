@@ -21,7 +21,7 @@ namespace BankStartWeb.Pages
 
         [BindProperty] public string Type { get; set; }
 
-        [BindProperty] public string Operation { get; set; }
+        [BindProperty] public string? Operation { get; set; }
 
         [BindProperty] public DateTime Date { get; set; }
 
@@ -59,11 +59,12 @@ namespace BankStartWeb.Pages
             if (ModelState.IsValid)
             {
                 var deposit = _transferService.Deposit(AccountId, Amount);
-                
-                if (deposit == ITransferService.Status.Error)
+
+                if (deposit == ITransferService.Status.ValueToHigh)
                 {
                     ModelState.AddModelError(nameof(Amount), "Cannot deposit more than 7000kr");
-
+                    types();
+                    operations();
                     return Page();
                 }
 

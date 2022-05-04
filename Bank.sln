@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankStartWeb", "BankStartWeb\BankStartWeb.csproj", "{1CF4356E-2F30-4848-A3E0-046A5B76311B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectBank", "TestProjectBank\TestProjectBank.csproj", "{A1AEE724-FAB7-4BA9-BFDA-6077F8B8875F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProjectBank", "TestProjectBank\TestProjectBank.csproj", "{A1AEE724-FAB7-4BA9-BFDA-6077F8B8875F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

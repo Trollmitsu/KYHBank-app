@@ -65,7 +65,7 @@ namespace BankStartWeb.Services
             }
             if (Amount > 7000)
             {
-                return ITransferService.Status.Error;
+                return ITransferService.Status.ValueToHigh;
 
             }
 
@@ -81,10 +81,7 @@ namespace BankStartWeb.Services
             });
 
                 account.Balance = account.Balance + Amount;
-                if (_context.SaveChanges() > 0)
-                {
-                    return ITransferService.Status.ok;
-                }
+                _context.SaveChanges();
 
                 return ITransferService.Status.ok;
         }

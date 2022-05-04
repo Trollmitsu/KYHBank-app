@@ -58,31 +58,36 @@ namespace BankStartWeb.Pages
         }
         public IActionResult OnPostCustomerId(int customerId)
         {
-            Customer = _context.Customers.Include( s=>s.Accounts ).First( a => a.Id == customerId);
-            return RedirectToPage("/AllCustomers/Customer", new {customerId});
+            if (ModelState.IsValid)
+            {
+                Customer = _context.Customers.Include(s => s.Accounts).First(a => a.Id == customerId);
+                return RedirectToPage("/AllCustomers/Customer", new { customerId });
+            }
+
+            return Page();
         }
 
-        public IActionResult OnGetFetchMore(int personId, int rowNo)
+        public IActionResult OnGetFetchMore(int personId, int pageNo)
         {
-            var query = _context.Transactions.Where(e => e.Id == personId);
+            var query = _context.Accounts.Where(e => e.Id == personId)
+                .SelectMany(e => e.Transactions)
+                .OrderByDescending(e => e.Date);
             
-            var r = query.GetPaged(rowNo, 20);
+            var r = query.GetPaged(pageNo, 5);
 
-            var list = r.Results.Select(e => new TransactionsViewModel
+            var list = r.Results.Select(e => new 
             {
-                Id = e.Id,
+                Id = personId,
                 Type = e.Type,
                 Operation = e.Operation,
-                Date = e.Date,
+                Date = e.Date.ToString("d"),
                 NewBalance = e.NewBalance,
                 Amount = e.Amount
 
 
             }).ToList();
 
-            bool lastpage = rowNo == r.PageCount;
-
-            return new JsonResult(new { Transaction = list });
+            return new JsonResult(new { items = list });
         }
     }
 }

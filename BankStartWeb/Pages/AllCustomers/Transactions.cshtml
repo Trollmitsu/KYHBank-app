@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{handler?}"
 @model BankStartWeb.Pages.TransactionsModel
 @{
 }
@@ -15,18 +15,19 @@
 </p>
 
     
-<table class="table" style="width:100%">
-    <tr>
-        
-        
-        <th>Type</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Operation</th>
-        <th>New Balance</th>
-    </tr>
-    
-    @foreach(var Transaction in Model.transaction)
+<table class="table" id="post-table" style="width:100%">
+   <thead>
+   <tr>
+       <th>Type</th>
+       <th>Date</th>
+       <th>Amount</th>
+       <th>Operation</th>
+       <th>New Balance</th>
+   </tr>
+   </thead>
+    <tbody>
+    </tbody>
+    @*@foreach(var Transaction in Model.transaction)
     {
      <tr>
         <td>@Transaction.Type</td>
@@ -35,7 +36,7 @@
         <td>@Transaction.Operation</td>
         <td>@Transaction.NewBalance</td>
     </tr>
-    }
+    }*@
      
      
 </table>
@@ -46,32 +47,30 @@
 @section Scripts
 {
     <script>
-        rowNo = 10;
+        pageNo = 1;
         function fetchMore() {
-            fetch("View?handler=FetchMore&rowNo=" + rowNo + "&personId=@Model.AccoundId")
+            fetch("Transactions?handler=FetchMore&pageNo=" + pageNo + "&personId=@Model.AccoundId")
                 .then((response) => response.json())
                 .then((json) => {
-                        rowNo = rowNo + 20;
-                        json.Transaction.forEach(tableElements);
+                        pageNo = pageNo + 1;
+                        json.items.forEach(tableElements);
                     }
                 );
         }
-
-
-
         function tableElements(element) {
-            document.querySelector('#posts-table tbody').innerHTML +=
-                ` <tr>
-        <td>${element.Type}</td>
-        <td>${element.Date}</td>
-        <td>${element.Amount}</td>
-        <td>${element.Operation}</td>
-        <td>${element.New Balance}</td>
-    </tr>
-    <a class="btn" onclick="fetchEvaluation(${element.id})">See more </a>
-    `;
+            document.querySelector('#posts-table, tbody').innerHTML +=
+            `<tr>
+                <td>${element.type}</td>
+                <td>${element.date}</td>
+                <td>${element.amount}</td>
+                <td>${element.operation}</td>
+                <td>${element.newBalance}</td>
+                </tr>`;
         }
-
-        </script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchMore();
+        });
+    </script>
+    
 }
 

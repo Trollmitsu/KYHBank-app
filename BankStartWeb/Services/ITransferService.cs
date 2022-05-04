@@ -14,7 +14,8 @@
             ok,
             InsufficientFunds,
             NegativeAmount,
-            Error
+            Error,
+            ValueToHigh
         }
 
         public Status Withdraw(int AccountId, decimal Amount);
