@@ -60,7 +60,7 @@ namespace TestProjectBank.Services
         }
 
         [TestMethod]
-        public void If_Deposit_Is_In_Negative_Amount()
+        public void If_Deposit_Is_In_Negative_Amount_Return_NegativeAmount()
         {
             var a = new Account()
             {
@@ -78,7 +78,7 @@ namespace TestProjectBank.Services
 
        
         [TestMethod]
-        public void If_Swish_Is_In_Negative_Amount()
+        public void If_Swish_Is_In_Negative_Amount_Return_NegativeAmount()
         {
             var b = new Account()
             {
@@ -102,10 +102,29 @@ namespace TestProjectBank.Services
             Assert.AreEqual(ITransferService.Status.NegativeAmount, status);
         }
 
-        //[TestMethod]
-        //public void If_Swish_Is_More_Than_Account_Balance()
-        //{
+        [TestMethod]
+        public void If_Swish_Is_More_Than_Account_Balance_Return_InsufficientFunds()
+        {
+            var b = new Account()
+            {
+                AccountType = "Credit",
+                Balance = 100,
+                Created = DateTime.Now,
+                Id = 6
+            };
+            var a = new Account()
+            {
+                AccountType = "Debit",
+                Balance = 100,
+                Created = DateTime.Now,
+                Id = 7
+            };
+            _context.Accounts.Add(a);
+            _context.Accounts.Add(b);
+            _context.SaveChanges();
 
-        //}
+            var status = _sut.Swish(a.Id, b.Id, 1000);
+            Assert.AreEqual(ITransferService.Status.InsufficientFunds, status);
+        }
     }
 }
