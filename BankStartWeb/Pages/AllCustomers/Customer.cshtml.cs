@@ -1,3 +1,4 @@
+using AutoMapper;
 using BankStartWeb.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,13 @@ namespace BankStartWeb.Pages
     public class CustomerModel : PageModel
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper _mapper;
 
-        public CustomerModel(ApplicationDbContext _context)
+        public CustomerModel(ApplicationDbContext _context, IMapper mapper
+            )
         {
             context = _context;
+            _mapper = mapper;
         }
 
         public class AccountViewModel

@@ -1,6 +1,7 @@
 ﻿using BankStartWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using static BankStartWeb.Pages.CustomersModel;
 
 namespace BankStartWeb.Pages
@@ -16,6 +17,7 @@ namespace BankStartWeb.Pages
             _context = context;
         }
 
+       
 
         public int CustomerCount { get; set; }
 
@@ -28,7 +30,7 @@ namespace BankStartWeb.Pages
 
         public void OnGet()
         {
-           CustomerCount = _context.Customers.Count();
+            CustomerCount = _context.Customers.Count();
             AccountCount = _context.Accounts.Count();
             BalanceCount = _context.Accounts.Sum(a => a.Balance);
         }
