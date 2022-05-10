@@ -12,9 +12,9 @@
 
 
 <p>
-    <a class="btn btn-primary" asp-page="/MoneyTransfer/Swish" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Transfer</a>
-    <a class="btn btn-primary" asp-page="/MoneyTransfer/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit</a>
-    <a class="btn btn-primary" asp-page="/MoneyTransfer/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw</a>
+    <a class="btn btn-primary" asp-page="/MoneyTransfer/Swish" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Transfer<i class='bx bx-transfer bx-burst mx-3' ></i></a>
+    <a class="btn btn-primary" asp-page="/MoneyTransfer/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit<i class='bx bx-money-withdraw bx-fade-up mx-3' ></i></a>
+    <a class="btn btn-primary" asp-page="/MoneyTransfer/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw<i class='bx bx-money-withdraw bx-fade-down mx-3' ></i></a>
 </p>
 
     
@@ -45,7 +45,7 @@
 </table>
 <a class="btn" href="javascript:fetchMore();"><button type="button" class="btn btn-secondary">See More</button></a>
 
-<p><a class="btn btn-primary rounded" asp-page="/AllCustomers/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
+<p><a class="btn btn-primary rounded" asp-page="/AllCustomers/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile <i class='bx bx-arrow-back bx-fade-right mx-3' ></i></a></p>
 
 @section Scripts
 {
