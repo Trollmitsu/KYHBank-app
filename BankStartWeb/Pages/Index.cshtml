@@ -5,17 +5,59 @@
 }
 
 
-        
+<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center mx-auto d-flex">
+<div class="card text-white bg-primary mb-3 mx-3" style="max-width: 18rem;">
+    <div class="card-header text-center">Sweden</div>
+    <div class="card-body">
+        <h5 class="card-title">Customers</h5>
+        <p class="card-text">@Model.CustomerCountSwe</p>
+        <h5 class="card-title">Accounts</h5>
+        <p class="card-text">@Model.AccountCountSwe</p>
+        <h5 class="card-title">Balance</h5>
+        <p class="card-text">@Model.BalanceCountSwe</p>
+    </div>
+</div>
 
+<div class="card text-white bg-danger mb-3 mx-3" style="max-width: 18rem;">
+    <div class="card-header text-center">Norway</div>
+    <div class="card-body">
+        <h5 class="card-title">Customers</h5>
+        <p class="card-text">@Model.CustomerCountNo</p>
+        <h5 class="card-title">Accounts</h5>
+        <p class="card-text">@Model.AccountCountNo</p>
+        <h5 class="card-title">Balance</h5>
+        <p class="card-text">@Model.BalanceCountNo</p>
+    </div>
+</div>
 
-<h1>Total Customers</h1>
-<h3> @Model.CustomerCount</h3>
-<h1>Total Accounts</h1>
-<h3> @Model.AccountCount</h3>
+<div class="card text-white bg-info mb-3 mx-3" style="max-width: 18rem;">
+    <div class="card-header text-center">Finland</div>
+    <div class="card-body">
+        <h5 class="card-title">Customers</h5>
+        <p class="card-text">@Model.CustomerCountFi</p>
+        <h5 class="card-title">Accounts</h5>
+        <p class="card-text">@Model.AccountCountFi</p>
+        <h5 class="card-title">Balance</h5>
+        <p class="card-text">@Model.BalanceCountFi</p>
+    </div>
+</div>
 
+</div>
 
-<h1>Total Money </h1>
-<h3>@Model.BalanceCount kr</h3>
+<div class="justify-content-center mx-auto d-flex">
+<div class="card text-white bg-dark mb-3 text-center" style="min-width: 40rem;">
+    <div class="card-header"> <h3>Total Customers</h3></div>
+    <div class="card-body">
+        <p class="card-text">@Model.CustomerCount</p>
+    </div>
+    <div class="card-header"> <h3>Total Accounts</h3></div>
+
+        <p class="card-text">@Model.AccountCount</p>
+    <div class="card-header"> <h3>Total Balance</h3></div>
+    <p class="card-text">@Model.BalanceCount</p>
+   <br/>
+</div>
+</div>
 
 
 

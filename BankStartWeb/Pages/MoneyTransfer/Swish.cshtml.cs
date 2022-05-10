@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using BankStartWeb.Services;
+using NToastNotify;
 
 
 namespace BankStartWeb.Pages
@@ -15,11 +16,13 @@ namespace BankStartWeb.Pages
     {
         private readonly ApplicationDbContext _context;
         private readonly ITransferService _transferService;
+        private readonly IToastNotification _toastNotification;
 
-        public SwishModel(ApplicationDbContext context, ITransferService transferService)
+        public SwishModel(ApplicationDbContext context, ITransferService transferService, IToastNotification toastNotification)
         {
             _context = context;
             _transferService = transferService;
+            _toastNotification = toastNotification;
         }
         [BindProperty]
         public int AccountId { get; set; }
@@ -70,22 +73,30 @@ namespace BankStartWeb.Pages
 
                 if (swish == ITransferService.Status.NegativeAmount)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot send negative amount");
+                    _toastNotification.AddErrorToastMessage("Cannot send negative amount");
                     return Page();
                 }
 
                 if (swish == ITransferService.Status.InsufficientFunds)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot send more than your account balance");
+                    _toastNotification.AddErrorToastMessage("Cannot send more than your account balance");
                     return Page();
                 }
 
                 if (swish == ITransferService.Status.Error)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot Swish to same account");
+                    _toastNotification.AddErrorToastMessage("Cannot Swish to same account");
                     return Page();
                 }
+
+                if (swish == ITransferService.Status.AccountNotFound)
+                {
+                    _toastNotification.AddErrorToastMessage("Invalid Account Number");
+                    return Page();
+                }
+                _toastNotification.AddSuccessToastMessage();
                 return RedirectToPage("/AllCustomers/Customer", new { CustomerId });
+
             }
 
                 

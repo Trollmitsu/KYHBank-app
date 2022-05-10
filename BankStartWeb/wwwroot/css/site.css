@@ -1,6 +1,10 @@
 html {
   font-size: 14px;
 }
+tr:nth-child(odd) {
+    background-color: whitesmoke;
+}
+
 
 @media (min-width: 768px) {
   html {

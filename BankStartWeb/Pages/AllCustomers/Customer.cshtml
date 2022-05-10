@@ -3,20 +3,23 @@
 @{
 }
 
-<h2>@Model.Customer.Givenname @Model.Customer.Surname</h2>
 
 
-    <p>@Model.Customer.Country</p>
-    <p>@Model.Customer.CountryCode </p>
-    <p>+@Model.Customer.TelephoneCountryCode@Model.Customer.Telephone</p>
-    <p>@Model.Customer.Birthday</p>
-    <p>@Model.Customer.EmailAddress</p>
-    <p>@Model.Customer.Streetaddress</p>
-    <p>@Model.Customer.Zipcode, @Model.Customer.City</p>
-    
 
+<div class="card text-white bg-dark mb-3" style="width: 18rem;">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><h2>@Model.Customer.Givenname @Model.Customer.Surname</h2></li>
+        <li class="list-group-item">@Model.Customer.EmailAddress</li>
+        <li class="list-group-item">+@Model.Customer.TelephoneCountryCode@Model.Customer.Telephone</li>
+        <li class="list-group-item">@Model.Customer.Birthday</li>
+        <li class="list-group-item">@Model.Customer.Streetaddress</li>
+        <li class="list-group-item">@Model.Customer.Zipcode, @Model.Customer.City</li>
+        <li class="list-group-item">@Model.Customer.Country</li>
 
-    <table class="table" style="width:100%">
+    </ul>
+</div>
+
+<table class="table" style="width:100%">
         <tr>
             <th>Account Number</th>
             <th>Account Type</th>
@@ -31,7 +34,7 @@
     {
         sum += account.Balance;
         <tr>
-            <td><a class="btn" asp-page="/AllCustomers/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id">@account.Id</a></td>
+            <td><a class="btn btn-secondary" asp-page="/AllCustomers/Transactions" asp-route-CustomerId="@account.CustomerId" asp-route-accountId="@account.Id">@account.Id</a></td>
             <td>@account.AccountType</td>
             <td>@account.Balance</td>
             
@@ -45,5 +48,5 @@
     <h3>Total Balance In All Accounts</h3>
      <h4>@sum.ToString("C")</h4>
 
-     <p><a class="btn" asp-page="/AllCustomers/Customers">Back To Customers List</a></p>
+     <p><a class="btn" asp-page="/AllCustomers/Customers"><button type="button" class="btn btn-primary">Back To Customers List</button></a></p>
      

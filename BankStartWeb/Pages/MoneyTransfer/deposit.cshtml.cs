@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using BankStartWeb.Services;
+using NToastNotify;
 
 namespace BankStartWeb.Pages
 {
@@ -12,11 +13,13 @@ namespace BankStartWeb.Pages
     {
         private readonly ApplicationDbContext _context;
         private readonly ITransferService _transferService;
+        private readonly IToastNotification _toastNotification;
 
-        public depositModel(ApplicationDbContext context, ITransferService transferService)
+        public depositModel(ApplicationDbContext context, ITransferService transferService, IToastNotification toastNotification)
         {
             _context = context;
             _transferService = transferService;
+            _toastNotification = toastNotification;
         }
 
         [BindProperty] public string Type { get; set; }
@@ -62,7 +65,7 @@ namespace BankStartWeb.Pages
 
                 if (deposit == ITransferService.Status.ValueToHigh)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot deposit more than 7000kr");
+                    _toastNotification.AddErrorToastMessage("Cannot deposit more than 7000kr");
                     types();
                     operations();
                     return Page();
@@ -70,13 +73,14 @@ namespace BankStartWeb.Pages
 
                 if (deposit == ITransferService.Status.NegativeAmount)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot deposit negative amount");
+                    _toastNotification.AddErrorToastMessage("Cannot deposit negative amount");
                     types();
                     operations();
                     return Page();
                 }
-
+                _toastNotification.AddSuccessToastMessage();
                 return RedirectToPage("/AllCustomers/Customer", new {CustomerId});
+
             }
             types();
             operations();

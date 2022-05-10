@@ -3,10 +3,13 @@
 @{
 }
 <form method="get">
-    <input asp-for="@Model.SearchWord" />
-    <input type="submit" value="Sök" />
+    <div class="d-flex justify-content-end align-content-between">
+        <input class="mx-5" asp-for="@Model.SearchWord"/>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    <br/>
 </form>
-<table class="table" style="width:100%">
+<table class="table table-hover" style="width:100%">
 <tr>
        <th>Id
        <a asp-page="/AllCustomers/Customers" asp-route-searchWord="@Model.SearchWord" asp-route-col="id" asp-route-order="asc">
@@ -66,7 +69,7 @@
         <td>
         @if (Model.PageNo > 1)
         {
-              <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)">Prev</a>
+            <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)">Prev</a>
         }
         </td>
         <td></td>

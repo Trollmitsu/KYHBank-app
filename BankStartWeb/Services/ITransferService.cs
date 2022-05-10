@@ -15,7 +15,8 @@
             InsufficientFunds,
             NegativeAmount,
             Error,
-            ValueToHigh
+            ValueToHigh,
+            AccountNotFound
         }
 
         public Status Withdraw(int AccountId, decimal Amount);

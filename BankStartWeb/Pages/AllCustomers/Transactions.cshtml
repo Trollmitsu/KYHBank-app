@@ -2,16 +2,19 @@
 @model BankStartWeb.Pages.TransactionsModel
 @{
 }
+<div class="card-body"> <h3>Account Number  @Model.AccoundId</h3>
     
-<h3>Account Number</h3>
-<h4>@Model.AccoundId</h4>
-<h3>Total Balance</h3>
-<h4>@Model.Account.Balance kr</h4>
+    <h3>Total Balance</h3>
+    <h4>@Model.Account.Balance kr</h4>
+</div>
 
 
-<p><a class="btn" asp-page="/MoneyTransfer/Swish" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Send to another Account</a>
-    <a class="btn" asp-page="/MoneyTransfer/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit </a>
-    <a class="btn" asp-page="/MoneyTransfer/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw </a>
+
+
+<p>
+    <a class="btn btn-primary" asp-page="/MoneyTransfer/Swish" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Transfer</a>
+    <a class="btn btn-primary" asp-page="/MoneyTransfer/deposit" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Deposit</a>
+    <a class="btn btn-primary" asp-page="/MoneyTransfer/Withdraw" asp-route-accountId="@Model.AccoundId" asp-route-customerId="@Model.CustomerId">Withdraw</a>
 </p>
 
     
@@ -40,9 +43,9 @@
      
      
 </table>
-<a class="btn" href="javascript:fetchMore();">See more</a>
+<a class="btn" href="javascript:fetchMore();"><button type="button" class="btn btn-secondary">See More</button></a>
 
-<p><a class="btn" asp-page="/AllCustomers/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
+<p><a class="btn btn-primary rounded" asp-page="/AllCustomers/Customer" asp-route-customerId="@Model.CustomerId">Back To Customer Profile</a></p>
 
 @section Scripts
 {

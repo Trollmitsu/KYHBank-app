@@ -58,49 +58,6 @@ namespace BankStartWeb.Pages
 
             o = o.OrderBy(col, order == "asc" ? ExtensionMethods.QuerySortOrder.Asc : ExtensionMethods.QuerySortOrder.Desc);
 
-            //if (col == "givenname")
-            //{
-            //    if (order == "asc")
-            //        o = o.orderby(ord => ord.givenname);
-            //    else
-            //        o = o.orderbydescending(ord => ord.givenname);
-            //}
-            //else if (col == "surname")
-            //{
-            //    if (order == "asc")
-            //        o = o.orderby(ord => ord.surname);
-            //    else
-            //        o = o.orderbydescending(ord => ord.surname);
-            //}
-            //else if (col == "nationalid")
-            //{
-            //    if (order == "asc")
-            //        o = o.orderby(ord => ord.nationalid);
-            //    else
-            //        o = o.orderbydescending(ord => ord.nationalid);
-            //}
-            //else if (col == "city")
-            //{
-            //    if (order == "asc")
-            //        o = o.orderby(ord => ord.city);
-            //    else
-            //        o = o.orderbydescending(ord => ord.city);
-            //}
-            //else if (col == "streetaddress")
-            //{
-            //    if (order == "asc")
-            //        o = o.orderby(ord => ord.streetaddress);
-            //    else
-            //        o = o.orderbydescending(ord => ord.streetaddress);
-            //}
-            //else if (col == "custid")
-            //{
-            //    if (order == "asc")
-            //        o = o.orderby(ord => ord.id);
-            //    else
-            //        o = o.orderbydescending(ord => ord.id);
-            //}
-
             var pageResult = o.GetPaged(PageNo, 20);
             TotalPageCount = pageResult.PageCount;
 

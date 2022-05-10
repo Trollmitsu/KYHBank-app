@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using BankStartWeb.Services;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using NToastNotify;
 
 namespace BankStartWeb.Pages
 {
@@ -13,11 +14,13 @@ namespace BankStartWeb.Pages
     {
         private readonly ApplicationDbContext _context;
         private readonly ITransferService _transferService;
+        private readonly IToastNotification _toastNotification;
 
-        public WithdrawModel(ApplicationDbContext context, ITransferService transferService)
+        public WithdrawModel(ApplicationDbContext context, ITransferService transferService, IToastNotification toastNotification)
         {
             _context = context;
             _transferService = transferService;
+            _toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -56,27 +59,30 @@ namespace BankStartWeb.Pages
 
                 if (Withdraw == ITransferService.Status.ok)
                 {
+
                     _context.SaveChanges();
                 }
                 if (Withdraw == ITransferService.Status.Error)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot withdraw more than 7000kr");
-
+                    
+                    _toastNotification.AddErrorToastMessage("Cannot withdraw more than 7000kr");
                     return Page();
                 }
 
                 if (Withdraw == ITransferService.Status.InsufficientFunds)
                 {
-                    ModelState.AddModelError(nameof(Amount), "InsufficientFunds");
-
+                    
+                    _toastNotification.AddErrorToastMessage("InsufficientFunds");
                     return Page();
                 }
 
                 if (Withdraw == ITransferService.Status.NegativeAmount)
                 {
-                    ModelState.AddModelError(nameof(Amount), "Cannot Withdraw Negative Amount");
+                    
+                    _toastNotification.AddErrorToastMessage("Cannot Withdraw Negative Amount");
                     return Page();
                 }
+                _toastNotification.AddSuccessToastMessage();
                 return RedirectToPage("/AllCustomers/Customer", new { customerId });
             
             }

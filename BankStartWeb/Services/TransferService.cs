@@ -92,8 +92,11 @@ namespace BankStartWeb.Services
         {
 
             var senderaccount = _context.Accounts.Include(e => e.Transactions).First(a => a.Id == senderId);
-            var reciveraccount = _context.Accounts.Include(e => e.Transactions).First(a => a.Id == receiverId);
-
+            var reciveraccount = _context.Accounts.Include(e => e.Transactions).FirstOrDefault(a => a.Id == receiverId);
+            if (reciveraccount == null)
+            {
+                return ITransferService.Status.AccountNotFound;
+            }
 
             senderaccount.Transactions.Add(new Transaction
             {
@@ -113,6 +116,7 @@ namespace BankStartWeb.Services
                 NewBalance = reciveraccount.Balance + Amount
 
             });
+            
 
             if (senderId == receiverId)
             {
@@ -142,6 +146,8 @@ namespace BankStartWeb.Services
 
                 return ITransferService.Status.ok;
             }
+
+           
 
           
 
