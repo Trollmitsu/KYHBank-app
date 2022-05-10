@@ -25,7 +25,7 @@ namespace BankStartWeb.Pages
         public int TotalPageCount { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string SearchWord { get; set; }
+        public string? SearchWord { get; set; }
 
         public class CustomersViewModel
         {
