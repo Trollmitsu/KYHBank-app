@@ -16,6 +16,7 @@
             NegativeAmount,
             Error,
             ValueToHigh,
+            ValueToLow,
             AccountNotFound
         }
 

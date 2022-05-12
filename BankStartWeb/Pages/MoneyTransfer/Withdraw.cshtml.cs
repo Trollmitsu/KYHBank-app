@@ -62,10 +62,15 @@ namespace BankStartWeb.Pages
 
                     _context.SaveChanges();
                 }
+
+                if (Withdraw == ITransferService.Status.ValueToLow)
+                {
+                    _toastNotification.AddErrorToastMessage("Cannot Withdraw less than 100kr");
+                }
                 if (Withdraw == ITransferService.Status.Error)
                 {
                     
-                    _toastNotification.AddErrorToastMessage("Cannot Withdraw less than 100 and more than 7000kr");
+                    _toastNotification.AddErrorToastMessage("Cannot Withdraw more than 7000kr");
                     return Page();
                 }
 

@@ -28,7 +28,7 @@ namespace BankStartWeb.Services
 
             if (Amount < 100 )
             {
-                return ITransferService.Status.Error;
+                return ITransferService.Status.ValueToLow;
 
             }
 
