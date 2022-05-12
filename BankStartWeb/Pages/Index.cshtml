@@ -44,8 +44,9 @@
 
 </div>
 
-<div class="justify-content-center mx-auto d-flex">
+@*<div class="justify-content-center mx-auto d-flex">
 <div class="card text-white bg-dark mb-3 text-center" style="min-width: 40rem;">
+    
     <div class="card-header"> <h3>Total Customers</h3></div>
     <div class="card-body">
         <p class="card-text">@Model.CustomerCount</p>
@@ -57,7 +58,31 @@
     <p class="card-text">@Model.BalanceCount</p>
    <br/>
 </div>
+</div>*@
+<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center mx-auto d-flex">
+<div class="card text-white bg-dark mb-3 mx-3 text-center" style="max-width: 18rem;">
+    <div class="card-header text-center"><h5>Total Customers</h5></div>
+    <div class="card-body">
+        <p class="card-text">@Model.CustomerCount</p>
+      
+    </div>
 </div>
 
+<div class="card text-white bg-dark mb-3 mx-3 text-center" style="max-width: 18rem;">
+    <div class="card-header text-center"><h5>Total Accounts</h5></div>
+    <div class="card-body">
+        <p class="card-text">@Model.AccountCount</p>
+      
+    </div>
+</div>
+
+<div class="card text-white bg-dark mb-3 mx-3 text-center" style="max-width: 18rem;">
+    <div class="card-header text-center"><h5>Total Balance</h5></div>
+    <div class="card-body">
+        <p class="card-text">@Model.BalanceCount</p>
+      
+    </div>
+</div>
+</div>
 
 
