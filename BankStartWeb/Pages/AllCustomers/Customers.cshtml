@@ -4,7 +4,7 @@
 }
 <form method="get">
     <div class="d-flex justify-content-end align-content-between">
-        <input class="mx-5" placeholder="Write Here" asp-for="@Model.SearchWord"/>
+        <input class="form-control form-control-lg" placeholder="Search" asp-for="@Model.SearchWord"/>
         <button type="submit" class="btn btn-primary">Search <i class='bx bx-search-alt-2 mx-3' ></i></button>
     </div>
     <br/>
@@ -62,14 +62,14 @@
             <td>@Customer.NationalId</td>
             <td>@Customer.City</td>
             <td>@Customer.Streetaddress</td>
-     <td>   <a asp-page="/AllCustomers/Customer" asp-route-CustomerId="@Customer.Id">Details</a> </td>
+            <td>   <a asp-page="/AllCustomers/Customer" asp-route-CustomerId="@Customer.Id"><h3><i class='bx bxs-comment-detail'></i></h3></a> </td>
        </tr>
     }
      <tr>
         <td>
         @if (Model.PageNo > 1)
         {
-            <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)">Prev</a>
+            <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo-1)"><h1><i class='bx bxs-left-arrow-square' ></i></h1></a>
         }
         </td>
         <td></td>
@@ -80,7 +80,7 @@
         <td>
             @if (Model.PageNo < Model.TotalPageCount)
             {
-                <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo+1)">Next</a>
+                <a asp-page="/AllCustomers/Customers" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo+1)"><h1><i class='bx bxs-right-arrow-square'></i></h1></a>
             }
             </td>
     </tr>
