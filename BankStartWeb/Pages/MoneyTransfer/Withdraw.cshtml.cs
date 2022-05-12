@@ -65,7 +65,7 @@ namespace BankStartWeb.Pages
                 if (Withdraw == ITransferService.Status.Error)
                 {
                     
-                    _toastNotification.AddErrorToastMessage("Cannot withdraw more than 7000kr");
+                    _toastNotification.AddErrorToastMessage("Cannot Withdraw less than 100 and more than 7000kr");
                     return Page();
                 }
 
